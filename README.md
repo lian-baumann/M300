@@ -4,8 +4,8 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
 # Inhaltsverszeichnis
 
 ## 10-Toolumgebungen 
-# M300
-## Apache Webserver automatisiert aufsetzen
+
+### Apache Webserver automatisiert aufsetzen
 Mit Vagrant kann man automatisiert ein System anhand von einem yml script erstellen. Das ist das Deklarative Deployment, also es wird nicht jede Maschine manuell deployed. Wir deployen hier einen Apache 2 Webserver anhand des Vagrant files.
 
 Nachfolgend wird die VM mit einem bereits abgeänderten File bzw. VM aus dem M300-Repository erstellt:
