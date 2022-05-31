@@ -71,16 +71,17 @@ Wir benutzen die TBZ-Maas-VM von Herrn Calisto, welche eine Ubuntu Distribution 
 Im nächsten Schritt suchen wir uns ein passendes Docker-image auf dem Dockerhub:
 <img src="ImagesDocs/docker_hub_mariadb.png" alt="Docker MariaDB" width="350"><br>
 
-Wir laden das Maria DB image vom Dockerhub herunter:
+Wir laden das ubuntu/mysql image vom Dockerhub herunter:
 
-        docker pull mariadb
+        docker pull ubuntu/mysql
 
-Mit docker images kann man alle images anzeigen auf dem System. Dann starten wir den Container mit dem docker run Befehl:docker run --name lili-abi-kuul -e MYSQL_ROOT_PASSWORD=abi123 -p 3306:3306 -d ubuntu/mysql
+Mit docker images kann man alle images anzeigen auf dem System. Dann starten wir den Container mit dem docker run Befehl:
 
         docker images
-        docker run --name lili-abi-kuul -e MYSQL_ROOT_PASSWORD=abi123 -p 3306:3306 -d ubuntu/mysql
+        docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -p 3306:3306 -d ubuntu/mysql
 
-
+--name ist der Name, den wir für den Container definieren. Dann geben wir ein Passwort an und mit -p führen wir eine Portweiterleitung vom Container zum Host durch. Diese ist nötig, damit man vom Host auf die Datenbank zugreifen kann.<br>
+Mit einem Datenbankclient wie z.B. MySQL Workbench können wir jetzt auf die Datenbank connecten.
 
 
 ## 20-Infrastruktur
