@@ -9,6 +9,7 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
   - [Docker](#docker)
     - [Docker erklärt](#docker-erklärt)
     - [Befehle](#befehle)
+    - [Datenbank mit Docker aufsetzen](#datenbank-mit-docker-aufsetzen)
   - [20-Infrastruktur](#20-infrastruktur)
   - [35-Sicherheit 1](#35-sicherheit-1)
   - [30-Container](#30-container)
@@ -61,6 +62,25 @@ Wie bereits gesagt, nimmt der Deamon dann ein Image und deployed es als Containe
 ### Befehle
 Dies ist ein Cheat sheet zu Docker Containern, auf dem man alle wichtigen Befehle sieht:
 [docker_cheat_sheet.pdf](ImagesDocs/docker_cheat_sheet.pdf)
+
+### Datenbank mit Docker aufsetzen
+Wir benutzen die TBZ-Maas-VM von Herrn Calisto, welche eine Ubuntu Distribution am laufen hat. Darauf installieren wir erst mal Docker.
+
+        sudo apt-get install docker
+
+Im nächsten Schritt suchen wir uns ein passendes Docker-image auf dem Dockerhub:
+<img src="ImagesDocs/docker_hub_mariadb.png" alt="Docker MariaDB" width="350"><br>
+
+Wir laden das Maria DB image vom Dockerhub herunter:
+
+        docker pull mariadb
+
+Mit docker images kann man alle images anzeigen auf dem System. Dann starten wir den Container mit dem docker run Befehl:docker run --name lili-abi-kuul -e MYSQL_ROOT_PASSWORD=abi123 -p 3306:3306 -d ubuntu/mysql
+
+        docker images
+        docker run --name lili-abi-kuul -e MYSQL_ROOT_PASSWORD=abi123 -p 3306:3306 -d ubuntu/mysql
+
+
 
 
 ## 20-Infrastruktur
