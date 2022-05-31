@@ -2,9 +2,28 @@
 Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
 
 # Inhaltsverszeichnis
-hallo
+- [Einleitung allgemein](#einleitung-allgemein)
+- [Inhaltsverszeichnis](#inhaltsverszeichnis)
+  - [Vagrant](#vagrant)
+    - [Apache Webserver automatisiert aufsetzen](#apache-webserver-automatisiert-aufsetzen)
+  - [Docker](#docker)
+    - [Docker erklärt](#docker-erklärt)
+    - [Befehle](#befehle)
+  - [20-Infrastruktur](#20-infrastruktur)
+  - [35-Sicherheit 1](#35-sicherheit-1)
+  - [30-Container](#30-container)
+  - [35-Sicherheit 2](#35-sicherheit-2)
+  - [40-Container-Orchestrierung](#40-container-orchestrierung)
+  - [50-Add-ons](#50-add-ons)
+  - [60-Reflexion](#60-reflexion)
+  - [Quellen](#quellen)
 
-## 10-Toolumgebungen 
+## Vagrant
+Vagrant ist ein deklarativer Deployment anbieter für Containerumgebungen. Es ermöglicht uns, anhand eines Scriptes, ein System aufzusetzen. Dadurch, dass man die VM's jeweils immer vom gleichen Script deployed, sind sie konsistent und ersparen viel Arbeit. Wenn Probleme mit dem Server auftauchen, kann die VM einfach "Destroyed" werden und neu aufgesetzt, und schon ist die VM wieder clean.<br>
+Im Vagrantfile gibt man das Image an, welches man deployen möchte (z.B. Ubuntu) und verlinkt auch ein Provisioning file, in dem man zusätzliche Befehle für das System hinzufügen kann. Es lohnt sich z.B. in diesem Provisioning file den Befehl <b>sudo apt-get update</b> einzubauen, dass die VM jeweils direkt geupdated wird. Natürlich kann man auch gleich Installationen durchführen, wie z.B. <b>sudo apt install nginx</b>.
+
+        sudo apt-get update
+        sudo apt-get install nginx
 
 ### Apache Webserver automatisiert aufsetzen
 Mit Vagrant kann man automatisiert ein System anhand von einem yml script erstellen. Das ist das Deklarative Deployment, also es wird nicht jede Maschine manuell deployed. Wir deployen hier einen Apache 2 Webserver anhand des Vagrant files.
@@ -27,8 +46,22 @@ Nachfolgend wird die VM mit einem bereits abgeänderten File bzw. VM aus dem M30
         vagrant destroy -f
 7. Vagrant ist nun komplett einsatzfähig!
 
-## Quellen
-- https://github.com/mc-b/M300/
+## Docker
+### Docker erklärt
+Docker ist ein Container anbieter, welcher uns ermöglicht, anhand vom Docker Deamon, unsere Container zu deployen und zu managen. Es besteht aus verschiedenen Komponenten, welche uns dabei unterstützen:<br>
+<img src="ImagesDocs/docker_aufstellung.png" alt="Docker Übersicht" width="350"><br>
+
+<b>Daemon</b>
+Der Docker Daemon ist für das Managen der Infrastruktur zuständig. Er weiss, wo die Images abgelegt werden, welche Container gerade laufen und welches die standard registry ist. Wir kommunizieren also über den Daemon mit den Docker-containern.<br>
+
+<b>Images</b>
+Docker basiert auf Images. Dort drin sind alle benötigten Informationen vorhanden, um dann einen Container zu erstellen. Sie sind also sozusagen Containervorlagen, welche man zu containern ausführen kann. Diese Images müssen aber zuerst lokal in der Image-Umgebung platziert werden. Es stehen uns externe Registries zur Verfügung, wie z.B. Dockerhub, von dem wir vorgefertigte images direkt herunterladen können. Es ist auch möglich, ein image selbst zu erstellen und von diesem zu deployen.<br>
+Wie bereits gesagt, nimmt der Deamon dann ein Image und deployed es als Container.
+
+### Befehle
+Dies ist ein Cheat sheet zu Docker Containern, auf dem man alle wichtigen Befehle sieht:
+[docker_cheat_sheet.pdf](ImagesDocs/docker_cheat_sheet.pdf)
+
 
 ## 20-Infrastruktur
 Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
@@ -51,6 +84,9 @@ Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
 ## 60-Reflexion
 Lernprozess festgehalten (Form frei wählbar)
 
+## Quellen
+- https://github.com/mc-b/M300/
+- https://web.microsoftstream.com/video/df4e25df-b998-4c19-9263-17d3f32a6015?list=user&userId=91407230-9462-4d68-a2e7-13e41cfe3aaf&referrer=https:%2F%2Fwww.google.com%2F
 
 - - -
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/ch/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/ch/88x31.png" /></a><br />Dieses Werk ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/ch/">Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 3.0 Schweiz Lizenz</a>
