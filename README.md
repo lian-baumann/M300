@@ -11,6 +11,9 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
     - [Befehle](#befehle)
     - [Datenbank mit Docker aufsetzen](#datenbank-mit-docker-aufsetzen)
     - [Persistente Daten](#persistente-daten)
+    - [Docker Build](#docker-build)
+      - [Vorhandenes Image anpassen](#vorhandenes-image-anpassen)
+      - [Neues Image erstellen](#neues-image-erstellen)
   - [20-Infrastruktur](#20-infrastruktur)
   - [35-Sicherheit 1](#35-sicherheit-1)
   - [30-Container](#30-container)
@@ -104,7 +107,7 @@ Unter "Mountpoint" sehen wir den lokalen Pfad des verlinkten volumes. Nun passen
 Nun kann man auf die DB connecten und einige Anpassungen vornehmen. Ich habe zum Beispiel eigene Schemas erstellt. <br>
 <img src="ImagesDocs\mysql_workbench_schemas.png">
 
-Wenn wir die DB löschen und wieder starten, werden die Daten erfolgreich wiederhergestellt.
+Wenn wir die DB löschen und wieder starten, werden die Daten erfolgreich wiederhergestellt. Nun löschen wir sie erstmals mit folgenden Befehlen:
 
     docker ps #containerid herausfinden
     docker stop <containerID>
@@ -120,6 +123,75 @@ Und dann starten wir den container wieder:
 Beim Wiederverbinden sehen wir, dass die Schemas weiterhin vorhanden sind, wir haben also eine konsistente Containerstruktur erstellt.
 
 <img src="ImagesDocs\mysql_workbench_schemas.png">
+
+
+### Docker Build
+#### Vorhandenes Image anpassen
+Erst installieren wir ein Image und lassen einen Container laufen. Wir verwenden das ubuntu-image und nennen unsere Maschine "ubuntucontainer". Wir öffnen den container gleich im bash.
+
+    docker run -it --name ubuntucontainer --hostname ubuntucontainer ubuntu bash
+
+Im container drin updaten wir erstmals die Paketliste mit
+
+    apt-get update
+
+Dann installieren wir das Programm Cowsay:
+
+    apt-get install -y cowsay fortune
+
+Wir verlassen den Container
+
+    exit
+
+Nun erstellen wir ein image anhand des laufenden containers mit den neu installierten Programmen:
+
+    docker commit cowsay cowsay-img
+
+Wir können das neu erstelle Image anschauen. Wir sehen, dass das neue cowsay image grösser ist, als das ubuntu image, da wir ja Applikationen darauf installiert haben:
+
+    docker images
+
+Nun vergleichen wir die beiden vorhandenen images. Wir werden sehen, dass das cowsay image einen Layer oben drauf hat, welcher später created wurde als der Rest der Layers.
+
+    docker history ubuntu
+    docker history cowsay-img
+
+Jetzt lassen wir unser neues image laufen mit dem Docker run befehl. Wir werden sehen, dass der neue Container tatsächlich die benötigten Applikationen installiert hat:
+
+    docker run -it --name cowsaycontainer --hostname cowsaycontainer cowsay-img bash
+    /usr/games/fortune |/usr/games/cowsay
+
+#### Neues Image erstellen
+Nun erstellen wir unser eigenes Image. Dafür erstellen wir uns einen Ordner, in diesem erstellen wir ein neues file namens "Dockerfile" und befüllen es mit Inhalt:
+
+    mkdir Docker  # Ordner erstellen
+    cd Docker
+    touch index.html  # index File erstellen für apache
+    echo "<h1>M300</h1>" > index.html # index befüllen mit html code
+    nano Dockerfile  # Dockerfile erstellen und öffnen
+
+Im Texteditor, der geöffnet wurde, schreiben wir nun unseren Input für das Dockerfile. Hier ein Beispiel:
+
+    FROM ubuntu
+    RUN apt-get update && apt-get install -y cowsay fortune apache2
+    COPY index.html /var/www/html/
+    CMD ["apachectl", "-D", "FOREGROUND"]
+    EXPOSE 80
+
+Kurze Erklärung, was hier gemacht wird: Zuerst wählen wir ein image aus, in unserem Fall ist das Ubuntu. Dann führen wir einen update und installationscommand aus auf dem container. Mit COPY kopieren wir unser lokales index.html file auf den Container. Dann führen wir noch einen CMD Befehl für Apache aus und geben den Port 80 nach aussen frei.<br>
+
+Um aus dem erstellen File ein wirkliches image zu erstellen, führen wir folgenden Befehl aus:
+
+    docker build -t cowsay-dockerfile .
+    docker images # Images anzeigen
+
+Nun müssen wir nur noch den Container laufen lassen:
+
+    docker run --name cowsaycontainer2 -d --hostname cowsaycontainer2 -p 80:8080 cowsay-dockerfile
+
+Auf dem lokalen Computer kann nun über Port 8080 auf das index.html zugegriffen werden:
+
+    <IP-Adresse>:8080
 
 ## 20-Infrastruktur
 Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
