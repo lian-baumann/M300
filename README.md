@@ -10,6 +10,7 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
     - [Docker erklärt](#docker-erklärt)
     - [Befehle](#befehle)
     - [Datenbank mit Docker aufsetzen](#datenbank-mit-docker-aufsetzen)
+    - [Persistente Daten](#persistente-daten)
   - [20-Infrastruktur](#20-infrastruktur)
   - [35-Sicherheit 1](#35-sicherheit-1)
   - [30-Container](#30-container)
@@ -53,10 +54,10 @@ Nachfolgend wird die VM mit einem bereits abgeänderten File bzw. VM aus dem M30
 Docker ist ein Container anbieter, welcher uns ermöglicht, anhand vom Docker Deamon, unsere Container zu deployen und zu managen. Es besteht aus verschiedenen Komponenten, welche uns dabei unterstützen:<br>
 <img src="ImagesDocs/docker_aufstellung.png" alt="Docker Übersicht" width="350"><br>
 
-<b>Daemon</b>
+<b>Daemon</b><br>
 Der Docker Daemon ist für das Managen der Infrastruktur zuständig. Er weiss, wo die Images abgelegt werden, welche Container gerade laufen und welches die standard registry ist. Wir kommunizieren also über den Daemon mit den Docker-containern.<br>
 
-<b>Images</b>
+<b>Images</b><br>
 Docker basiert auf Images. Dort drin sind alle benötigten Informationen vorhanden, um dann einen Container zu erstellen. Sie sind also sozusagen Containervorlagen, welche man zu containern ausführen kann. Diese Images müssen aber zuerst lokal in der Image-Umgebung platziert werden. Es stehen uns externe Registries zur Verfügung, wie z.B. Dockerhub, von dem wir vorgefertigte images direkt herunterladen können. Es ist auch möglich, ein image selbst zu erstellen und von diesem zu deployen.<br>
 Wie bereits gesagt, nimmt der Deamon dann ein Image und deployed es als Container.
 
@@ -67,23 +68,39 @@ Dies ist ein Cheat sheet zu Docker Containern, auf dem man alle wichtigen Befehl
 ### Datenbank mit Docker aufsetzen
 Wir benutzen die TBZ-Maas-VM von Herrn Calisto, welche eine Ubuntu Distribution am laufen hat. Darauf installieren wir erst mal Docker.
 
-        sudo apt-get install docker
+    sudo apt-get install docker
 
 Im nächsten Schritt suchen wir uns ein passendes Docker-image auf dem Dockerhub:
 <img src="ImagesDocs/docker_hub_mariadb.png" alt="Docker MariaDB" width="350"><br>
 
 Wir laden das ubuntu/mysql image vom Dockerhub herunter:
 
-        docker pull ubuntu/mysql
+    docker pull ubuntu/mysql
 
 Mit docker images kann man alle images anzeigen auf dem System. Dann starten wir den Container mit dem docker run Befehl:
 
-        docker images
-        docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -p 3306:3306 -d ubuntu/mysql
+    docker images
+    docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -p 3306:3306 -d ubuntu/mysql
 
 --name ist der Name, den wir für den Container definieren. Dann geben wir ein Passwort an und mit -p führen wir eine Portweiterleitung vom Container zum Host durch. Diese ist nötig, damit man vom Host auf die Datenbank zugreifen kann.<br>
 Mit einem Datenbankclient wie z.B. MySQL Workbench können wir jetzt auf die Datenbank connecten.
 
+### Persistente Daten
+Damit unsere Daten konsistent bleiben im Container (also wenn der Container gelöscht und wiederaufgebaut wird bleibt alles gleich) konsistent bleiben, benötigen wir einen verlinkten Ordner. Um das zu erreichen, mounten wir zwei Ordner miteinander. Im Fall von mysql ist das /var/lib/mysql mit irgend einem Ordner auf unserem lokalen Rechner, wie z.B. /home/lian/mysql.<br>
+
+Um diese Verlinkung der Volumes zu bekommen, müssen wir erstmals ein Volume erstellen:
+
+    docker volume create mydbstore
+
+Nun können wir überprüfen, mit welchem lokalen Ordner dieses Volume verknüpft ist, indem wir es inspizieren:
+
+    docker volume inspect mydbstore
+
+Unter "Mountpoint" sehen wir den lokalen Pfad des verlinkten volumes. Nun passen wir unseren Docker run Befehl nochmals an. Wir fügen <b>-v mydbstore:/var/lib/mysql</b> hinzu, das bedeutet, dass wir dieses erstellte Volume gerne verknüpfen möchten mit dem Order /var/lib/mysql.
+
+    docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -v mydbstore:/var/lib/mysql -p 3306:3306 -d ubuntu/mysql
+
+Nun kann man wieder auf die DB connecten und dort einen neuen table erstellen. Dieser wird direkt auf unseren lokal gemounteten Ordner kopiert und wenn wir die DB löschen und wieder starten, werden die Daten erfolgreich wiederhergestellt.
 
 ## 20-Infrastruktur
 Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
