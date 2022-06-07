@@ -100,7 +100,26 @@ Unter "Mountpoint" sehen wir den lokalen Pfad des verlinkten volumes. Nun passen
 
     docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -v mydbstore:/var/lib/mysql -p 3306:3306 -d ubuntu/mysql
 
-Nun kann man wieder auf die DB connecten und dort einen neuen table erstellen. Dieser wird direkt auf unseren lokal gemounteten Ordner kopiert und wenn wir die DB löschen und wieder starten, werden die Daten erfolgreich wiederhergestellt.
+<img src="ImagesDocs\docker_run_persistant.png"><br>
+Nun kann man auf die DB connecten und einige Anpassungen vornehmen. Ich habe zum Beispiel eigene Schemas erstellt. <br>
+<img src="ImagesDocs\mysql_workbench_schemas.png">
+
+Wenn wir die DB löschen und wieder starten, werden die Daten erfolgreich wiederhergestellt.
+
+    docker ps #containerid herausfinden
+    docker stop <containerID>
+    docker rm <containerID>
+
+
+Und dann starten wir den container wieder:
+
+    docker run --name <containername> -e MYSQL_ROOT_PASSWORD=<password> -v mydbstore:/var/lib/mysql -p 3306:3306 -d ubuntu/mysql
+
+<img src="ImagesDocs\docker_remove_container.png"><br>
+
+Beim Wiederverbinden sehen wir, dass die Schemas weiterhin vorhanden sind, wir haben also eine konsistente Containerstruktur erstellt.
+
+<img src="ImagesDocs\mysql_workbench_schemas.png">
 
 ## 20-Infrastruktur
 Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
