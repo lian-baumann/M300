@@ -158,7 +158,7 @@ Nun vergleichen wir die beiden vorhandenen images. Wir werden sehen, dass das co
 
 Jetzt lassen wir unser neues image laufen mit dem Docker run befehl. Wir werden sehen, dass der neue Container tatsächlich die benötigten Applikationen installiert hat:
 
-    docker run -it --name cowsaycontainer --hostname cowsaycontainer cowsay-img bash
+    docker run -it --name cowsaycontainer_new --hostname cowsaycontainer_new cowsay-img bash
     /usr/games/fortune |/usr/games/cowsay
 
 #### Neues Image erstellen
