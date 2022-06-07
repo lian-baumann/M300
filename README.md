@@ -19,6 +19,7 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
   - [60-Reflexion](#60-reflexion)
   - [Quellen](#quellen)
 
+
 ## Vagrant
 Vagrant ist ein deklarativer Deployment anbieter für Containerumgebungen. Es ermöglicht uns, anhand eines Scriptes, ein System aufzusetzen. Dadurch, dass man die VM's jeweils immer vom gleichen Script deployed, sind sie konsistent und ersparen viel Arbeit. Wenn Probleme mit dem Server auftauchen, kann die VM einfach "Destroyed" werden und neu aufgesetzt, und schon ist die VM wieder clean.<br>
 Im Vagrantfile gibt man das Image an, welches man deployen möchte (z.B. Ubuntu) und verlinkt auch ein Provisioning file, in dem man zusätzliche Befehle für das System hinzufügen kann. Es lohnt sich z.B. in diesem Provisioning file den Befehl <b>sudo apt-get update</b> einzubauen, dass die VM jeweils direkt geupdated wird. Natürlich kann man auch gleich Installationen durchführen, wie z.B. <b>sudo apt install nginx</b>.
