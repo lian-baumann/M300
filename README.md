@@ -145,7 +145,7 @@ Wir verlassen den Container
 
 Nun erstellen wir ein image anhand des laufenden containers mit den neu installierten Programmen:
 
-    docker commit cowsay cowsay-img
+    docker commit ubuntucontainer cowsay-img
 
 Wir können das neu erstelle Image anschauen. Wir sehen, dass das neue cowsay image grösser ist, als das ubuntu image, da wir ja Applikationen darauf installiert haben:
 
