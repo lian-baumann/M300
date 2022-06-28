@@ -14,6 +14,7 @@ Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
     - [Docker Build](#docker-build)
       - [Vorhandenes Image anpassen](#vorhandenes-image-anpassen)
       - [Neues Image erstellen](#neues-image-erstellen)
+    - [Docker Webapp](#docker-webapp)
   - [20-Infrastruktur](#20-infrastruktur)
   - [35-Sicherheit 1](#35-sicherheit-1)
   - [30-Container](#30-container)
@@ -192,6 +193,14 @@ Nun müssen wir nur noch den Container laufen lassen:
 Auf dem lokalen Computer kann nun über Port 8080 auf das index.html zugegriffen werden:
 
     <IP-Adresse>:8080
+
+### Docker Webapp
+Zuerst klonen wir das Repository https://gitlab.com/ser-cal/Container-CAL-webapp_v1 in einen Ordner mit dem Befehl
+
+    git clone https://gitlab.com/ser-cal/Container-CAL-webapp_v1.git
+
+Nun passen wir die App unseren Bedürfnissen an, indem wir im geklonten Repostitory unter dem Ordner 
+
 
 ## 20-Infrastruktur
 Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
