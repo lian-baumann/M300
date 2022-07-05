@@ -12,14 +12,6 @@ ZUR LB2: https://github.com/lian-baumann/M300/tree/main/LB2
     - [Docker Build](#docker-build)
       - [Vorhandenes Image anpassen](#vorhandenes-image-anpassen)
       - [Neues Image erstellen](#neues-image-erstellen)
-    - [Docker Webapp](#docker-webapp)
-  - [20-Infrastruktur](#20-infrastruktur)
-  - [35-Sicherheit 1](#35-sicherheit-1)
-  - [30-Container](#30-container)
-  - [35-Sicherheit 2](#35-sicherheit-2)
-  - [40-Container-Orchestrierung](#40-container-orchestrierung)
-  - [50-Add-ons](#50-add-ons)
-  - [60-Reflexion](#60-reflexion)
   - [Quellen](#quellen)
 
 
@@ -192,34 +184,7 @@ Auf dem lokalen Computer kann nun über Port 8080 auf das index.html zugegriffen
 
     <IP-Adresse>:8080
 
-### Docker Webapp
-Zuerst klonen wir das Repository https://gitlab.com/ser-cal/Container-CAL-webapp_v1 in einen Ordner mit dem Befehl
 
-    git clone https://gitlab.com/ser-cal/Container-CAL-webapp_v1.git
-
-Nun passen wir die App unseren Bedürfnissen an, indem wir im geklonten Repostitory unter dem Ordner 
-
-
-## 20-Infrastruktur
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 35-Sicherheit 1
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 30-Container
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 35-Sicherheit 2
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 40-Container-Orchestrierung
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 50-Add-ons 
-Einträge (eigene Erkenntnisse während dem Bearbeiten dieses Kapitels)
-
-## 60-Reflexion
-Lernprozess festgehalten (Form frei wählbar)
 
 ## Quellen
 - https://github.com/mc-b/M300/
