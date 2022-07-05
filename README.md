@@ -1,8 +1,6 @@
-# Einleitung allgemein
-Einleitung allgemein (Erklärungen zum ganzen M300-Projekt)
+ZUR LB2: https://github.com/lian-baumann/M300/tree/main/LB2
 
 # Inhaltsverszeichnis
-- [Einleitung allgemein](#einleitung-allgemein)
 - [Inhaltsverszeichnis](#inhaltsverszeichnis)
   - [Vagrant](#vagrant)
     - [Apache Webserver automatisiert aufsetzen](#apache-webserver-automatisiert-aufsetzen)
